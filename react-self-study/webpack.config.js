@@ -22,9 +22,13 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules)/,
         use: {
-          loader: "babel-loader"
+             loader: "babel-loader",
+             options: {
+               presets: ["@babel/preset-env", "@babel/react"],
+               plugins: ['@babel/proposal-class-properties']
+              }
         }
       },
       {
@@ -33,6 +37,7 @@ module.exports = {
       }
     ]
   },
+  mode: "none",
   // Configurations for the webpack-dev-server which will be described in coming section.
   devServer: {
     port: 3000,
