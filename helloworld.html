@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+
+<!--<script src="helloworld.js"></script>-->
+
+<!--
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    </head>
+    <body>
+
+    <ul id="list">
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+        <li>empty</li>
+    </ul>
+    <input id="execute_btn" type="button" value="execute" />
+    <script type="text/javascript">
+     $('#execute_btn').click(function(){
+        $('#list li').text('JavaScript');
+     })
+    </script>
+-->
+        <script>
+
+/*
+Array.prototype.rand = function(){
+    var index = Math.floor(this.length*Math.random());
+    return this[index];
+}
+var arr = new Array('seoul','new york','ladarkh','pusan', 'Tsukuba');
+console.log(arr.rand());
+*/
+
+/*
+var o = {}
+var p = {}
+function func(){
+    switch(this){
+        case o:
+            document.write('o<br />');
+            break;
+        case p:
+            document.write('p<br />');
+            break;
+        case window:
+            document.write('window<br />');
+            break;          
+    }
+}
+func();
+func.apply(o);
+func.apply(p);
+*/
+
+//function Func(){
+//    document.write(o);
+//}
+//var o = new Func();
+
+/*
+var person = {}
+person.name = 'my name';
+person.introduce = function(){
+    return 'My name is '+this.name;
+}
+document.write(person.introduce());
+//위와 동일한 객체생성 결과를 갖는 코드
+var person = {
+    'name' : 'my name',
+    'introduce' : function(){
+        return 'My name is '+this.name;
+    }
+}
+document.write(person.introduce());
+*/
+
+/*
+var arr = []
+for(var i = 0; i < 5; i++){
+    arr[i] = function(){
+        return i;
+    }
+}
+for(var index in arr) {
+    console.log(arr[index]());
+}
+
+var arr = []
+for(var i = 0; i < 5; i++){
+    arr[i] = function(id) {
+        return function(){
+            return id;
+        }
+    }(i);
+}
+for(var index in arr) {
+    console.log(arr[index]());
+}
+*/
+
+/*
+for(var i = 0; i < 1; i++){
+    var name = 'Java Script';
+}
+alert(name);
+
+var i = 5;
+function a(){
+    var i = 10;
+    b();
+}
+function b(){
+    document.write(i);
+}
+a(); //5
+*/
+
+/*
+MYAPP = {}
+MYAPP.calculator = {
+    'left' : null,
+    'right' : null
+}
+MYAPP.coordinate = {
+    'left' : null,
+    'right' : null
+}
+ 
+MYAPP.calculator.left = 10;
+MYAPP.calculator.right = 20;
+function sum(){
+    return MYAPP.calculator.left + MYAPP.calculator.right;
+}
+document.write(sum());
+*/
+
+//var urlPattern = /\b(?:https?):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*/gim;
+//var content = '치환 : http://test.cc/1/ .';
+//var result = content.replace(urlPattern, function(url){
+//    return '<a href="'+url+'">'+url+'</a>';
+//});
+//console.log(result);
+
+/*
+var pattern = /(\w+)\s(\w+)/;
+var str = "First Second";
+var result = str.replace(pattern, "$2, $1");
+console.log(result);
+*/
+
+/*
+var pattern = new RegExp('c');
+console.log(pattern.exec('abcdef')); // ["a"]
+console.log(pattern.test('abcd')); // true
+console.log('abcdef'.match(pattern)); // ["a"]
+console.log('abcdef'.replace(pattern, 'A'));  // Abcdef
+var oi = /a/i; //i 대소문자 구분하지 않음
+console.log("Abcdea".match(oi)); // ["A"];
+var og = /a/g; //하나 이상의 모든 결과를 리턴
+console.log("abcdea".match(og));
+*/
+
+//alert(welcome());
+
+/*
+function welcome(){
+	return 'Hello world'
+}
+alert(welcome());
+*/
+
+//alert('Hello world');
+
+/*
+var grades = {
+	'array' : ['a', 'b', 'c', 'd', 'e'],
+    'list' : {'aaa': 10, 'bbb': 6, 'ccc': 80},
+    'show' : function(){
+        for(var name in this.list){
+            document.write(name+':'+this.list[name]+"<br />");
+        }
+    }
+};
+grades.show();
+alert(grades.array.length);
+*/
+
+/*
+//var grades = {'aaa': 10, 'bbb': 6, 'ccc': 80};
+var grades = new Object();
+grades['aaa'] = 10;
+grades['bbb'] = 6;
+grades['ccc'] = 80;
+//alert(grades['ccc']);
+//alert(grades.aaa);
+for(key in grades) {
+    document.write("key : "+key+" value = "+grades[key]+"<br />");
+}
+*/
+
+/*
+var li = ['a', 'b', 'c', 'd', 'e'];
+li.push('f');
+li = li.concat(['g', 'h']);
+li.unshift('z');
+alert(li);
+li.splice(1, 0, 'ABC');
+alert(li);
+li.shift();
+alert(li);
+li.pop();
+alert(li);
+li.reverse();
+alert(li);
+li.sort();
+alert(li);
+*/
+
+/*
+function get_members(){
+    return ['aaa', 'bbb', 'ccc'];
+}
+members = get_members();
+for(i = 0; i < members.length; i++){
+    document.write(members[i].toUpperCase());   
+    document.write('<br />');
+}
+*/
+
+//var member = ['AAA', 'BBB', 'CCC']
+//alert(member[0]);
+//alert(member[1]);
+//alert(member[2]);
+
+/*
+var numbering = function (){
+    i = 0;
+    while(i < 10){
+        document.write(i);
+        i += 1;
+    }   
+}
+numbering();
+*/
+
+/*
+function numbering(arg){
+    i = arg;
+    while(i < 10){
+        document.write(i);
+        i += 1;
+    }
+	return 'done';
+}
+
+alert(numbering(5));
+*/
+
+/*
+var i = 0;
+while(i < 10){
+    document.write('JavaScript Study <br />');
+	i++;
+}
+
+for(var i = 0; i < 10; i++){
+	if(i === 5) {
+        break;
+    }
+    document.write('JavaScript Study: '+ i +'<br />');
+}
+*/
+
+/*
+        id = prompt('아이디를 입력해주세요.');
+        password = prompt('비밀번호를 입력해주세요.');
+        if(id=='아이디' && password=='비밀번호'){
+            alert('인증 했습니다.');
+        } else {
+            alert('인증에 실패 했습니다.');
+        }
+*/
+
+//if(true){
+//    alert('result : true');
+//}
+
+/*
+alert(1==2)                 //false
+alert(1==1)                 //true
+alert("one"=="two")         //false 
+alert("one"=="one")         //true
+alert(1=='1');              //true
+alert(1==='1');             //false
+alert(null == undefined);   //true
+alert(null === undefined);  //false
+alert(true == 1);           //true
+alert(true === 1);          //false
+alert(true == '1');         //true
+alert(true === '1');        //false
+alert(0 === -0);            //true
+alert(NaN === NaN);         //false
+alert('NaN' === 'NaN');     //true
+*/
+
+//var a = 1;
+//alert(a+1);  //2
+
+/*
+alert(typeof "1")
+alert(typeof 1)
+
+alert('egoing\'s javascript')
+alert("안녕하세요.\n자바스크립트 세계에 오신 것을 환영합니다");
+*/
+
+alert("Java" + "Script");
+alert("JavaScript".length)
+
+        </script>
+    </body>
+</html>
