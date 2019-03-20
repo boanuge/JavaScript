@@ -1,5 +1,4 @@
-# start_from_scratch
-webpack4 configurations for React, Node,js project
+https://pro-self-studier.tistory.com/128?category=658753
 
 안녕하세요, 프로독학러 입니다.
 
