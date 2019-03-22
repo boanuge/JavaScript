@@ -23,6 +23,10 @@ loadImage(function(error) {
     console.log("//ToDo: When image loading is successful");
 });
 
+/*
+ * Below code is working exactly same as above.
+ */
+
 // Promis (Example of loading a image)
 function loadImage(url) {
 
