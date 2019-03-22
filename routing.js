@@ -88,6 +88,9 @@ db.run("insert into test_db(message) values (?)", "테스트", function() {
 db.each("select * from test_db", function(err, row) {
 	console.log(row);
 });
+db.all("select * from test_db", function(err, rows) {
+	console.log(rows);
+});
 
 db.close();
 */
