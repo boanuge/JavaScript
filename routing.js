@@ -82,7 +82,7 @@ console.log("//ToDo:SQLite3");
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("./test_db.db");
 
-db.run("insert into test_db(message) values (?)", "테스트", function() {
+db.run("insert into test_db values (?, ?, ?)", ["1", "2", "3"], function() {
 	console.log("테스트");
 })
 db.each("select * from test_db", function(err, row) {
