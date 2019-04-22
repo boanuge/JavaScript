@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+
+<title>MobileWeb Test</title>
+
+<style>
+#log {
+	overflow: scroll;
+	height: 200px;
+	border: solid 1px;
+}
+
+.circle {
+	height: 70px;
+	width: 70px;
+	-moz-border-radius: 35px;
+	border-radius: 35px;
+	position: absolute;
+}
+</style>
+
+</head>
+<body>
+	<form>
+		<p>
+			Date: <input type=date name=date></input> <br> Email: <input
+				type=email name=email></input> <br> Number: <input type=number
+				name=number></input> <br> Phone: <input type=tel name=phone></input>
+			<br> Search: <input type=search name=search></input>
+		</p>
+	</form>
+
+	<div id="log" style='word-break: break-all; word-wrap: break-word;'></div>
+
+	<script>
+		var clientX, clientY;
+		var deltaX, deltaY;
+
+		function handler4touchstart(event) {
+			var element = document.getElementById("log");
+
+			clientX = event.touches[0].clientX;
+			clientY = event.touches[0].clientY;
+
+			element.innerHTML += event.type + ", Client(x, y) = ";
+			element.innerHTML += "(" + clientX + ", " + clientY + ")<br>";
+			element.innerHTML += "Color = " + getRandomColor() + "<br>";
+		}
+
+		function handler4touchend(event) {
+			var element = document.getElementById("log");
+
+			deltaX = event.changedTouches[0].clientX - clientX;
+			deltaY = event.changedTouches[0].clientY - clientY;
+
+			element.innerHTML += event.type + ", Delta(x, y) = ";
+			element.innerHTML += "(" + deltaX + ", " + deltaY + ")<br>";
+		}
+
+		document.addEventListener("touchstart", handler4touchstart);
+		document.addEventListener("touchend", handler4touchend);
+	</script>
+
+	<button onclick="document.getElementById('log').innerHTML=''">Log Clear</button>
+
+	<script>
+		document.addEventListener("touchstart", function(event) {
+			var touches = event.changedTouches;
+
+			for (let i = 0, k = touches.length; i < k; i++) {
+				var touch = touches[i];
+
+				var element = document.createElement("div");
+
+				element.id = prefix + touch.identifier;
+				element.className = "circle";
+				element.style.backgroundColor = getRandomColor();
+
+				document.body.appendChild(element);
+
+				element.style.left = (touch.pageX - 35) + "px";
+				element.style.top = (touch.pageY - 35) + "px";
+			}
+		});
+
+		document.addEventListener("touchmove", function(event) {
+			var touches = event.changedTouches;
+
+			for (let i = 0, k = touches.length; i < k; i++) {
+				var touch = touches[i];
+
+				var element = document
+						.getElementById(prefix + touch.identifier);
+
+				element.style.left = (touch.pageX - 35) + "px";
+				element.style.top = (touch.pageY - 35) + "px";
+			}
+		});
+
+		document.addEventListener("touchend", function(event) {
+			var touches = event.changedTouches;
+
+			for (let i = 0, k = touches.length; i < k; i++) {
+				var touch = touches[i];
+
+				var element = document
+						.getElementById(prefix + touch.identifier);
+
+				element.parentNode.removeChild(element);
+			}
+		});
+
+		var prefix = "circle-";
+
+		function getRandomColor() {
+			var letters = '0123456789ABCDEF'.split('');
+			var color = '#';
+
+			for (var i = 0; i < 6; i++) {
+				color += letters[Math.round(Math.random() * 15)];
+			}
+
+			return color;
+		}
+	</script>
+
+</body>
+</html>
