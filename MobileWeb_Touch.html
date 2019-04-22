@@ -14,6 +14,26 @@
 	border: solid 1px;
 }
 
+#touch {
+	height: 40px;
+	background-color: green;
+	text-align: center;
+	color: #fff;
+	font-size: 40px;
+	padding-bottom: 20px;
+}
+
+#fixed {
+	position: fixed;
+	bottom: 10px;
+	background-color: #FFF;
+	width: 100%;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	bottom: 10px;
+}
+
 .circle {
 	height: 70px;
 	width: 70px;
@@ -24,6 +44,7 @@
 </style>
 
 </head>
+
 <body>
 	<form>
 		<p>
@@ -40,7 +61,7 @@
 		var clientX, clientY;
 		var deltaX, deltaY;
 
-		function handler4touchstart(event) {
+		function handler4position(event) {
 			var element = document.getElementById("log");
 
 			clientX = event.touches[0].clientX;
@@ -51,7 +72,7 @@
 			element.innerHTML += "Color = " + getRandomColor() + "<br>";
 		}
 
-		function handler4touchend(event) {
+		function handler4distance(event) {
 			var element = document.getElementById("log");
 
 			deltaX = event.changedTouches[0].clientX - clientX;
@@ -61,11 +82,57 @@
 			element.innerHTML += "(" + deltaX + ", " + deltaY + ")<br>";
 		}
 
-		document.addEventListener("touchstart", handler4touchstart);
-		document.addEventListener("touchend", handler4touchend);
+		document.addEventListener("touchstart", handler4position);
+		document.addEventListener("touchend", handler4distance);
 	</script>
 
-	<button onclick="document.getElementById('log').innerHTML=''">Log Clear</button>
+	<button onclick="document.getElementById('log').innerHTML=''">Log
+		Clear</button>
+
+	<button onclick="document.getElementById('list').innerHTML=''">Event
+		Clear</button>
+
+	<div id="touch">Listing Events</div>
+
+	<script>
+		var element = document.getElementById("touch");
+
+		element.addEventListener("touchstart", function(e) {
+			document.querySelector("#list").innerHTML = "";
+		});
+
+		element.addEventListener("touchstart", handler4log);
+		element.addEventListener("touchmove", handler4log);
+		element.addEventListener("touchend", handler4log);
+		element.addEventListener("mouseover", handler4log);
+		element.addEventListener("mousemove", handler4log);
+		element.addEventListener("mousedown", handler4log);
+		element.addEventListener("mouseup", handler4log);
+		element.addEventListener("mouseout", handler4log);
+		element.addEventListener("click", handler4log);
+
+		function handler4log(e) {
+			var element = document.querySelector("#list");
+			element.innerHTML += "<li>" + e.type + " = 1</li>"
+		}
+	</script>
+
+	<div id="list"></div>
+
+	<div id="fixed">
+		<button id="prev" name="prev">Prev</button>
+		<button id="next" name="next">Next</button>
+	</div>
+
+	<script>
+		document.querySelector("#prev").addEventListener("click", function(e) {
+			document.getElementById("log").scrollTop -= 150;
+		});
+
+		document.querySelector("#next").addEventListener("click", function(e) {
+			document.getElementById("log").scrollTop += 150;
+		});
+	</script>
 
 	<script>
 		document.addEventListener("touchstart", function(event) {
