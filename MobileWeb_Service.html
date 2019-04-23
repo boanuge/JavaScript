@@ -25,10 +25,25 @@ button {
 }
 </style>
 
+<style>
+	#some{
+		width:50px;
+		height:50px;
+		background-color:green;
+		position: absolute;
+		top:50px;
+		left:0px;
+	}
+	#some.move{
+		transform:translate3d(200px,400px,0) scale(1.5) rotate(405deg);
+		transition:transform 4s ease-in-out;
+	}
+</style>
+
 <script>
 	if (navigator.getBattery) { //Callback by Promise
 		navigator.getBattery().then(function(event) {
-			window.alert((event.level *100) + "% (Battery Level)");
+			window.alert((event.level * 100) + "% (Battery Level)");
 		});
 	}
 
@@ -44,11 +59,11 @@ button {
 		document.body.style.backgroundColor = "green";
 	}
 
-	window.addEventListener("online", handler4Online); //Callback only when there is a change to online.
+	window.addEventListener("online", handler4Online); //Callback when network state changes
 
-	//ToDo: Need to enable ('chrome://flags/#unsafely-treat-insecure-origin-as-secure')
+	//Need to enable ('chrome://flags/#unsafely-treat-insecure-origin-as-secure')
 	if (navigator.geolocation) {
-		let map; //Leaflet Map Library (http://leafletjs.com)
+		let map; // Leaflet Map Library (http://leafletjs.com)
 		function showMap(latitude, longitude) {
 			// Create Leaflet map on map element.
 			if (!map) {
@@ -56,8 +71,8 @@ button {
 			}
 			// Add OSM tile leayer to the Leaflet map.
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-							{ attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-							}).addTo(map);
+				{ attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
 			// Target's GPS coordinates.
 			const target = L.latLng(latitude, longitude);
 			// Set map's center to target with zoom 14.
@@ -82,11 +97,22 @@ button {
 
 <body>
 
+	<script>
+		document.getElementsByTagName("body")[0].style.backgroundColor = "black";
+	</script>
+
 	<button onclick="getGeo()">Show Map</button>
 	<div id="map" style="height: 400px"></div>
 
+	<div id="some"></div>
 	<script>
-		document.getElementsByTagName("body")[0].style.backgroundColor = "black";
+		document.body.onload = function() {
+			var ele = document.querySelector("#some");
+			ele.classList.add("move");
+			ele.addEventListener("transitionend", function() {
+				console.log("transiton end!");
+			}); 
+		}
 	</script>
 
 </body>
