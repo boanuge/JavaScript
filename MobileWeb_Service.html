@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>MobileWeb Test</title>
+
+<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet" />
+
+<style>
+button {
+	position: relative;
+	z-index: 2;
+	font-size: 20px;
+}
+
+#map {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	top: 50px;
+}
+</style>
+
+<script>
+	if (navigator.getBattery) { //Callback by Promise
+		navigator.getBattery().then(function(event) {
+			window.alert((event.level *100) + "% (Battery Level)");
+		});
+	}
+
+	if (navigator.connection) {
+		if (navigator.onLine) {
+			window.alert(navigator.connection.downlink + "MB/sec (Downlink Speed)");
+		} else {
+			window.alert("Offline");
+		}
+	}
+
+	function handler4Online(event) {
+		document.body.style.backgroundColor = "green";
+	}
+
+	window.addEventListener("online", handler4Online); //Callback only when there is a change to online.
+
+	//ToDo: Need to enable ('chrome://flags/#unsafely-treat-insecure-origin-as-secure')
+	if (navigator.geolocation) {
+		let map; //Leaflet Map Library (http://leafletjs.com)
+		function showMap(latitude, longitude) {
+			// Create Leaflet map on map element.
+			if (!map) {
+				map = L.map(document.getElementById("map"));
+			}
+			// Add OSM tile leayer to the Leaflet map.
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+							{ attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+							}).addTo(map);
+			// Target's GPS coordinates.
+			const target = L.latLng(latitude, longitude);
+			// Set map's center to target with zoom 14.
+			map.setView(target, 14);
+			// Place a marker on the same location.
+			L.marker(target).addTo(map);
+		}
+
+		function getGeo() {
+			var latitude, longitude;
+
+			navigator.geolocation.getCurrentPosition(function(position) {
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
+
+				showMap(latitude, longitude);
+			});
+		}
+	}
+</script>
+</head>
+
+<body>
+
+	<button onclick="getGeo()">Show Map</button>
+	<div id="map" style="height: 400px"></div>
+
+	<script>
+		document.getElementsByTagName("body")[0].style.backgroundColor = "black";
+	</script>
+
+</body>
+</html>
