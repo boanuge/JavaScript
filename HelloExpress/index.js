@@ -1,11 +1,10 @@
-const express = require('express');
+const express = require("express");
 const serveIndex = require("serve-index");
+const fs = require("fs");
 const server = express();
-const port = 3000;
+const port = 8888;
 
 server.use(express.json());
-
-var timestamp = require('./time.js');
 
 //Display static file list in the directory
 var path = __dirname + "/static";
@@ -13,7 +12,9 @@ server.use("/public", express.static(path)
     , serveIndex(path, { icons: true, view: "details" })
 );
 
-//middleware callback before calling http method specific callback
+var timestamp = require('./time.js');
+
+//Call middleware callback before http method specific callback
 server.use(timestamp);
 
 server.get('/', function (req, res) {
@@ -24,31 +25,100 @@ server.post('/', function (req, res) {
     res.send('Got a POST request at /');
 });
 
-server.put('/user', function (req, res) {
-    res.send('Got a PUT request at /user');
+server.put('/', function (req, res) {
+    res.send('Got a PUT request at /');
 });
 
-server.delete('/user', function (req, res) {
-    res.send('Got a DELETE request at /user');
+server.delete('/', function (req, res) {
+    res.send('Got a DELETE request at /');
 });
 
-var callback1 = function (req, res, next) {
-    res.send('Got a request at /secret');
-    next();
+server.get('/users', function (req, res) {
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data) {
+        console.log(data);
+        res.end(data);
+    });
+});
+
+server.get('/users/:username', function (req, res) {
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data) {
+        var users = JSON.parse(data);
+        res.json(users[req.params.username]);
+    });
+});
+
+server.post('/add/:username', function (req, res) {
+
+    var result = {};
+    var username = req.params.username;
+
+    //Check request data validity
+    if (!req.body["password"] || !req.body["name"]) {
+        result["result"] = "failed";
+        result["desc"] = "empty";
+        res.json(result);
+        return;
+    }
+
+    //Load JSON data and check duplication by username
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data) {
+        var users = JSON.parse(data);
+        if (users[username]) { //if exists
+            result["result"] = "failed";
+            result["desc"] = "duplicated";
+            res.json(result);
+            return;
+        } else { //if not duplicated
+            users[username] = req.body;
+        }
+
+        //Save JSON data
+        fs.writeFile(__dirname + "/user.json"
+            , JSON.stringify(users, null, '\t')
+            , { encoding: 'utf8', flag: 'w' }, function (err, data) {
+                result = { "result": "successful", "value": 1 };
+                res.json(result);
+            });
+    });
+});
+
+server.delete('/delete/:username', function (req, res) {
+
+    var result = {};
+
+    //Load JSON data
+    fs.readFile(__dirname + "/user.json", "utf8", function (err, data) {
+
+        var users = JSON.parse(data);
+
+        //if not exists
+        if (!users[req.params.username]) {
+            result["result"] = "failed";
+            result["desc"] = "not found";
+            res.json(result);
+            return;
+        } else { //if exists
+            delete users[req.params.username];
+            fs.writeFile(__dirname + "/user.json"
+                , JSON.stringify(users, null, '\t')
+                , { encoding: 'utf8', flag: 'w' }, function (err, data) {
+                    result["result"] = "successful";
+                    res.json(result);
+                    return;
+                });
+        }
+    });
+})
+
+var callback2 = function (req, res, next) {
+    console.log('Got a request at /json');
+    next(); //Call next callback function
 };
 
-var callback2 = function (req, res) {
-    console.log('Got a request at /secret');
-};
-
-server.all('/secret', [callback1, callback2]);
-
-server.all('/json', function (req, res) {
-
+server.all('/json', [callback2], function (req, res) {
     console.log(req.body);
-
-    var result = JSON.stringify({ name: "1", id: 1 }, null, '\t');
-    res.send(result);
+    var result = JSON.stringify({ result: "successful", value: 1 }, null, '\t');
+    res.status(200).send(result);
 });
 
 server.listen(port, () => console.log('Server is listening on port: ' + port));
