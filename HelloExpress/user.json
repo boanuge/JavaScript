@@ -1,0 +1,14 @@
+{
+    "1": {
+        "name": "albert",
+        "password": "first_pw"
+    },
+    "2": {
+        "name": "betty",
+        "password": "second_pw"
+    },
+    "4": {
+        "name": "abcd",
+        "password": "1234"
+    }
+}
