@@ -2,6 +2,7 @@
 •자바스크립트는 그 이름에서 알 수 있듯이 자바 프로그램 언어의 기본적인 문법의 영향을 받음
     •ECMA International에서 자바스크립트 표준을 관리함
 •코드탄생 목적은 웹페이지를 동적으로 프로그래밍적으로 제어가기 위해서 고안됨
+    •클라이언트의 경우 사용자의 액션에 따라 동작하기 때문에 대부분 비동기(Callback) 방식임
 •하지만 현재 웹페이지를 동적으로 제어하는 것 뿐 아니라 다양한 용도로 이용되고 있음
     •예) node.js 서버측에서 실행되는 자바스크립트, node.js를 사용하는 자바스크립트와 유사한 언어로 PHP가 있음
 •호스트 환경 필요, 이 때 호스트 환경이란 자바스크립트가 구동되는 환경을 의미함
@@ -106,19 +107,19 @@ C:\>weinre --boundHost -all- --httpPort 8080
     6.이 외 Timer, History API, Device Orientation Event 등의 서비스 기능들
 
 Framework:
-•Web Framework for Node.js: Express (Light-weight)
+•Web Framework for Node.js: Express (Server-side)
     a.#npm install
     b.#npm init ← index.js 파일이 기본 Main 파일
     c.#npm install express --save ← 폴더명이 Express와 동일하면 안됨
     d.#npm install serve-index --save ← 디렉토리내 파일들 목록 출력
     e.#node index.js
-•View Framework: React (Heavy-weight)
+•View Framework: React (View-side)
     •페이스북이  2013년 5월 발표한 프레임워크, M(Model)-V(View)-C(Controller) 구조 중 View 영역에 집중
-    •현재 글로벌하게 가장 많이 사용되고 있음 (전세계 탑2 내)
-    •페이스북 웹페이지 및 모바일페이지에서 사용 및 인스타그램, 야후, 넷플릭스에서도 사용
-    •Node.js 의 경우 프레임워크가 아니라 자바스크립트 엔진임(eg. 크롬 V8 자바스크립트 엔진)
+    •현재 UI 관련 글로벌하게 가장 많이 사용되고 있음
+        •페이스북 웹페이지 및 모바일페이지에서 사용 및 인스타그램, 야후, 넷플릭스에서도 사용
     •버전 v15부터 IE8 이하 버전을 지원하지 않음
-        •페이스북은 이 버전부터 Production 에서 사용해도 된다고 안정성을 약속함
+•이 외 AngularJS (strong in Europe), Vue (for View), jQuery (for DOM), Redux (for Data/Event State Mgnt) 등
+    •참고: Node.js 의 경우 위와 같은 프레임워크(= 라이브러리)가 아니라 자바스크립트 엔진임(eg. 크롬 V8 자바스크립트 엔진)
 
 참고자료:
 •https://opentutorials.org/course/743
