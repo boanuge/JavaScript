@@ -1,10 +1,10 @@
-Maven MongoDB Driver 버전은 3.8.1 이다.
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongodb-driver-sync</artifactId>
-			<version>3.8.1</version>
-		</dependency>
-    
+* Maven MongoDB Driver Version = 3.8.1
+	<dependency>
+		<groupId>org.mongodb</groupId>
+		<artifactId>mongodb-driver-sync</artifactId>
+		<version>3.8.1</version>
+	</dependency>
+
 이 MongoDB Driver 와 잘 호환 될 수 있는 버전을 Pull 한다.
 
 https://hub.docker.com/_/mongo?tab=tags
@@ -35,22 +35,21 @@ $ docker rm mongo
 
 $ cat mongod.conf
 
+####BEGIN: mongod.conf
 storage:
   dbPath: /data/db
   journal:
     enabled: true
-
 systemLog:
   destination: file
   logAppend: true
   path: /data/log/mongod.log
-
 net:
   port: 27017
   bindIp: 0.0.0.0
-
 #security:
 #  authorization: enabled
+####END: mongod.conf
 
 이미지 빌드시 우리의 "mongod.conf" 파일를 이미지에 넣도록 해야 한다.
 
@@ -58,34 +57,28 @@ net:
 
 $ cat Dockerfile
 
+####BEGIN: Dockerfile
 FROM mongo:3.6
-
 RUN mkdir -p /data/db \
     && chown -R mongodb:mongodb /data/db
-
 RUN mkdir -p /data/log \
     && chown -R mongodb:mongodb /data/log
-
 RUN touch /data/log/mongod.log \
     && chown -R mongodb:mongodb /data/log/mongod.log
-
 RUN chown -R mongodb:mongodb /data
-
 COPY ./mongod.conf /etc/
-
 VOLUME ["/data/db", "/data/temp"]
-
 WORKDIR /data/
-
 CMD ["mongod", "--config", "/etc/mongod.conf"]
-
 EXPOSE 27017
+####END: Dockerfile
 
 아래명령어로 이미지를 만든다.
 
 $ docker build --tag mongodb:0.1 .
 
 위 명령으로 생성한 Docker 이미지를 아래명령으로 실행한다.
+참고: 호스트의 폴더를 공유 할 때, 컨테이너 내 해당 폴더에 이미 파일이 있을 경우 볼륨 맵핑 시 오류 발생
 
 $ docker run -d --name mongodb -p 27017:27017 -v ~/docker_images/data/db:/data/db -v ~/docker_images/data/temp:/data/temp mongodb:0.1
 
